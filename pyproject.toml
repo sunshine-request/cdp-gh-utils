@@ -27,7 +27,12 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
 ]
 dynamic = ["version"]
-dependencies = []
+dependencies = [
+  "ghapi>=1.0.3",
+  "pandas>=1",
+  "python-dotenv>=1.0.0",
+  "tqdm>=4",
+]
 
 [project.urls]
 Homepage = "https://github.com/CouncilDataProject/cdp-gh-utils"
@@ -69,7 +74,7 @@ dev = [
 # entry points
 # https://peps.python.org/pep-0621/#entry-points
 [project.entry-points."console_scripts"]
-run-gh-action = "cdp_gh_utils.bin.run_gh_action:main"
+backfill-cdp-instance = "cdp_gh_utils.bin.backfill_cdp_instance:main"
 
 # build settings
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
