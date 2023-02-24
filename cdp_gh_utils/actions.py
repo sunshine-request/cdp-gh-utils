@@ -81,6 +81,7 @@ def backfill_instance(  # noqa: C901
         # Actual run
         try:
             # Trigger the run
+            log.debug("Triggering new workflow run.")
             api.actions.create_workflow_dispatch(
                 owner=owner,
                 repo=repo,
@@ -91,7 +92,6 @@ def backfill_instance(  # noqa: C901
                     "to": iter_end_str,
                 },
             )
-            log.debug("Triggered workflow.")
 
             # Find the new run
             found_run = False
@@ -124,7 +124,7 @@ def backfill_instance(  # noqa: C901
 
             # Keep checking status
             workflow_complete = False
-            log.debug("Starting workflow watch.")
+            log.debug("Watching workflow run.")
             while not workflow_complete:
                 workflow_details = api.actions.get_workflow_run(
                     owner=owner,
