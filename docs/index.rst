@@ -1,5 +1,5 @@
 Welcome to cdp-gh-utils's documentation!
-======================================
+========================================
 
 .. toctree::
    :hidden:
