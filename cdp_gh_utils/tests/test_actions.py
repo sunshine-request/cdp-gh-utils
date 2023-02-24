@@ -21,8 +21,8 @@ from cdp_gh_utils import actions
             False,
             actions.RunResult(
                 state="Dry run success",
-                command="gh workflow run --repo doesnt/matter fake.yml"
-            )
+                command="gh workflow run --repo doesnt/matter fake.yml",
+            ),
         ),
         (
             "doesnt/matter",
@@ -35,7 +35,7 @@ from cdp_gh_utils import actions
                 command=(
                     "gh workflow run --repo doesnt/matter fake.yml "
                     "-f hello=world -f a=b"
-                )
+                ),
             ),
         ),
     ],

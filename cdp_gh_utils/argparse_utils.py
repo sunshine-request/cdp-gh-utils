@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 
+from __future__ import annotations
+
 import argparse
+from collections.abc import Iterable
+from typing import Any, Sequence
 
 ###############################################################################
+
 
 class ParseKwargs(argparse.Action):
     """
@@ -20,9 +25,16 @@ class ParseKwargs(argparse.Action):
     ```
     """
 
-    def __call__(self, parser, namespace, values, option_string=None):
+    def __call__(
+        self: ParseKwargs,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: str | Sequence[Any] | None,
+        option_string: str | None = None,
+    ) -> None:
         """Call the dictionary parser."""
         setattr(namespace, self.dest, {})
-        for value in values:
-            key, value = value.split("=")
-            getattr(namespace, self.dest)[key] = value
+        if isinstance(values, Iterable):
+            for value in values:
+                key, value = value.split("=")
+                getattr(namespace, self.dest)[key] = value

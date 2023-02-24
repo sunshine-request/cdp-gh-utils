@@ -34,10 +34,7 @@ class Args(argparse.Namespace):
         p.add_argument(
             "workflow_file_name",
             type=str,
-            help=(
-                "The name of the workflow file to run. "
-                "i.e. 'ci.yml'"
-            ),
+            help=("The name of the workflow file to run. " "i.e. 'ci.yml'"),
         )
         p.add_argument(
             "--watch",

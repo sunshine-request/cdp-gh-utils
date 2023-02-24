@@ -13,10 +13,7 @@ log = logging.getLogger(__name__)
 ###############################################################################
 
 GH_ACTIONS_COMMAND_TEMPLATE = (
-    "gh workflow run "
-    "--repo {repo} "
-    "{workflow_file_name} "
-    "{parameters}"
+    "gh workflow run " "--repo {repo} " "{workflow_file_name} " "{parameters}"
 )
 
 ###############################################################################
@@ -37,13 +34,10 @@ def run(
 ) -> RunResult:
     # If there are parameters, compile them
     if parameters:
-        compiled_parameters = " ".join([
-            f"-f {k}={v}"
-            for k, v in parameters.items()
-        ])
+        compiled_parameters = " ".join([f"-f {k}={v}" for k, v in parameters.items()])
     else:
         compiled_parameters = ""
-    
+
     # Fill the full command
     filled_command = GH_ACTIONS_COMMAND_TEMPLATE.format(
         repo=repo,
@@ -58,7 +52,7 @@ def run(
             state="Dry run success",
             command=filled_command,
         )
-    
+
     # Actual run
     try:
         proc_resp = subprocess.run(
