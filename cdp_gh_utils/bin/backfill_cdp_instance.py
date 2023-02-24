@@ -131,7 +131,7 @@ def main() -> None:
             workflow_filename=args.workflow_filename,
             ref=args.ref,
         )
-        
+
         # Handle storage
         if args.outfile:
             results_save_path = args.outfile
@@ -141,10 +141,10 @@ def main() -> None:
                 f"--{args.owner}-{args.repo}"
                 f"--{args.start_datetime}-{args.end_datetime}.csv"
             )
-        
+
         # Store results
         results.to_csv(results_save_path, index=False)
-        
+
     except Exception as e:
         log.error("=============================================")
         log.error("\n\n" + traceback.format_exc())
