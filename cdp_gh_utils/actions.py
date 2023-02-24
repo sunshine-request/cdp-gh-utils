@@ -91,12 +91,14 @@ def backfill_instance(  # noqa: C901
                     "to": iter_end_str,
                 },
             )
+            log.debug("Triggered workflow.")
 
             # Find the new run
             found_run = False
             max_iter = 20
             current_iter = 0
             while not found_run and current_iter < max_iter:
+                log.debug("Checking for queued workflow run.")
                 queued_runs = api.actions.list_workflow_runs(
                     owner=owner,
                     repo=repo,
@@ -106,17 +108,23 @@ def backfill_instance(  # noqa: C901
                     status="queued",
                 )
                 if len(queued_runs["workflow_runs"]) == 1:
+                    log.debug("Found the queued workflow run.")
                     found_run = True
                     break
                 else:
                     current_iter += 1
                     time.sleep(0.5)
 
+            # Handle not found
+            if not found_run:
+                raise ValueError("Could not find queued run.")
+
             # Find the workflow to monitor
             watch_workflow_id = queued_runs["workflow_runs"][0]["id"]
 
             # Keep checking status
             workflow_complete = False
+            log.debug("Starting workflow watch.")
             while not workflow_complete:
                 workflow_details = api.actions.get_workflow_run(
                     owner=owner,
@@ -127,6 +135,7 @@ def backfill_instance(  # noqa: C901
                 # Check status
                 if workflow_details["status"] == "completed":
                     workflow_complete = True
+                    log.debug("Workflow complete.")
                     break
                 else:
                     time.sleep(60)
@@ -150,6 +159,7 @@ def backfill_instance(  # noqa: C901
                     "workflow_link": workflow_link,
                     "status": workflow_details["status"],
                     "conclusion": workflow_details["conclusion"],
+                    "error": None,
                 }
             )
 
@@ -169,6 +179,7 @@ def backfill_instance(  # noqa: C901
                     "workflow_link": None,
                     "status": "failed_start",
                     "conclusion": "failed_start",
+                    "error": str(e),
                 }
             )
 
