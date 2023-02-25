@@ -27,7 +27,7 @@ def backfill_instance(  # noqa: C901
     end_datetime: str | datetime,
     iter_days: int | timedelta = 10,
     overlap_days: int | timedelta = 1,
-    ignore_errors: bool = True,
+    ignore_errors: bool = False,
     token: str | None = None,
     workflow_filename: str = "event-gather-pipeline.yml",
     ref: str = "main",

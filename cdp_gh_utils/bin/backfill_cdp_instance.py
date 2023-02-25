@@ -88,7 +88,7 @@ class Args(argparse.Namespace):
             help="The branch or git ref name to trigger the workflow on.",
         )
         p.add_argument(
-            "--ignore-errors",
+            "--ignore_errors",
             action="store_true",
             help="Try to backfill all batches regardless of errors.",
         )
