@@ -6,6 +6,7 @@ import logging
 import os
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -31,7 +32,18 @@ def backfill_instance(  # noqa: C901
     token: str | None = None,
     workflow_filename: str = "event-gather-pipeline.yml",
     ref: str = "main",
+    outfile: str | Path | None = None,
 ) -> pd.DataFrame:
+    # Handle storage
+    if outfile:
+        results_save_path = Path(outfile)
+    else:
+        results_save_path = Path(
+            f"cdp-backfill-results"
+            f"--{owner}-{repo}"
+            f"--{start_datetime}-{end_datetime}.csv"
+        )
+
     if token:
         # Create API
         api = GhApi(token=token)
@@ -163,6 +175,9 @@ def backfill_instance(  # noqa: C901
                 }
             )
 
+            # Store results
+            pd.DataFrame(backfill_results).to_csv(results_save_path, index=False)
+
         except (HTTP4xxClientError, ValueError) as e:
             log.error(f"Failed during {iter_start_str} - {iter_end_str}")
             log.error(e)
@@ -182,5 +197,8 @@ def backfill_instance(  # noqa: C901
                     "error": str(e),
                 }
             )
+
+            # Store results
+            pd.DataFrame(backfill_results).to_csv(results_save_path, index=False)
 
     return pd.DataFrame(backfill_results)
