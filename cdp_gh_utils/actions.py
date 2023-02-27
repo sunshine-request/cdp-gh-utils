@@ -25,7 +25,7 @@ def backfill_instance(  # noqa: C901
     repo: str,
     start_datetime: str | datetime,
     end_datetime: str | datetime,
-    iter_days: int | timedelta = 10,
+    iter_days: int | timedelta = 3,
     overlap_days: int | timedelta = 1,
     ignore_errors: bool = False,
     token: str | None = None,

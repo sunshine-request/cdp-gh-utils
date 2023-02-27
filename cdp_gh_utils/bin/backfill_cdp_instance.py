@@ -57,14 +57,14 @@ class Args(argparse.Namespace):
         p.add_argument(
             "--iter_days",
             type=int,
-            default=10,
-            help="The number of days to backfill during each workflow run.",
+            default=3,
+            help="The number of days to backfill during each workflow run. Default: 3",
         )
         p.add_argument(
             "--overlap_days",
             type=int,
             default=1,
-            help="The number of days to overlap each workflow run by.",
+            help="The number of days to overlap each workflow run by. Default: 1",
         )
         p.add_argument(
             "--token",
@@ -78,19 +78,27 @@ class Args(argparse.Namespace):
             default="event-gather-pipeline.yml",
             help=(
                 "The name of the workflow file which acts as the "
-                "event gather pipeline action definition."
+                "event gather pipeline action definition. "
+                "Default: 'event-gather-pipeline.yml'"
             ),
         )
         p.add_argument(
             "--ref",
             type=str,
             default="main",
-            help="The branch or git ref name to trigger the workflow on.",
+            help=(
+                "The branch or git ref name to trigger the workflow on. "
+                "Default: 'main'"
+            ),
         )
         p.add_argument(
             "--ignore_errors",
             action="store_true",
-            help="Try to backfill all batches regardless of errors.",
+            help=(
+                "Try to backfill all batches regardless of errors. "
+                "Note: The status of all workflow runs is stored to CSV "
+                "enabling later workflow re-running."
+            ),
         )
         p.add_argument(
             "--debug",
