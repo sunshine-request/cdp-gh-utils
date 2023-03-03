@@ -111,3 +111,6 @@ ENV/
 
 # VSCode
 .vscode
+
+# Generated files
+cdp-backfill-results--*
