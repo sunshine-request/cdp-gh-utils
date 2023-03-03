@@ -107,17 +107,17 @@ def backfill_instance(  # noqa: C901
 
             # Find the new run
             found_run = False
-            max_iter = 20
+            max_iter = 24  # 5 second sleeps * 24 = 2 min max
             current_iter = 0
             while not found_run and current_iter < max_iter:
-                log.debug("Checking for queued workflow run.")
+                log.debug("Checking for workflow run.")
                 queued_runs = api.actions.list_workflow_runs(
                     owner=owner,
                     repo=repo,
                     workflow_id=workflow_filename,
                     branch=ref,
                     event="workflow_dispatch",
-                    status="queued",
+                    status="in_progress",
                 )
                 if len(queued_runs["workflow_runs"]) == 1:
                     log.debug("Found the queued workflow run.")
@@ -125,7 +125,7 @@ def backfill_instance(  # noqa: C901
                     break
                 else:
                     current_iter += 1
-                    time.sleep(0.5)
+                    time.sleep(5)
 
             # Handle not found
             if not found_run:
@@ -150,7 +150,8 @@ def backfill_instance(  # noqa: C901
                     log.debug("Workflow complete.")
                     break
                 else:
-                    time.sleep(60)
+                    # Sleep for 5 minutes
+                    time.sleep(300)
 
             # Check conclusion
             workflow_link = (
