@@ -31,7 +31,7 @@ jobs:
         pip install .
     - name: Run Backfill command
       env:
-        REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
         python cdp_gh_utils/bin/backfill_cdp_instance.py \
           sunshine-request cdp-asheville \
