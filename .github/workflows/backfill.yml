@@ -34,6 +34,7 @@ jobs:
         REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
         python cdp_gh_utils/bin/backfill_cdp_instance.py \
-          --from ${{ github.event.inputs.from }} \
-          --to ${{ github.event.inputs.to }}
+          sunshine-request cdp-asheville \
+          ${{ github.event.inputs.from }} \
+          ${{ github.event.inputs.to }}
   
