@@ -1,0 +1,39 @@
+name: Backfill events
+
+on:
+  # schedule:
+    # <minute [0,59]> <hour [0,23]> <day of the month [1,31]> <month of the year [1,12]> <day of the week [0,6]>
+    # https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
+    # - cron: '26 6 * * *'
+  workflow_dispatch:
+    inputs:
+      from:
+        description: "Optional ISO formatted string for datetime to begin event gather from."
+        required: false
+        default: ""  # Will get converted to N (default 2) days prior
+      to:
+        description: "Optional ISO formatted string for datetime to end event gather at."
+        required: false
+        default: ""  # Will get converted to now
+
+jobs:
+  backfill-events:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.11'
+
+    - name: Install Python Dependencies
+      run: |
+        pip install .
+    - name: Run Backfill command
+      env:
+        REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        backfill_cdp_instance_events \
+          --from ${{ github.event.inputs.from }} \
+          --to ${{ github.event.inputs.to }}
+  
