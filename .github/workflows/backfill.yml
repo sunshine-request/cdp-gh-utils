@@ -33,7 +33,7 @@ jobs:
       env:
         REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
-        backfill_cdp_instance_events \
+        python cdp_gh_utils/bin/backfill_cdp_instance.py \
           --from ${{ github.event.inputs.from }} \
           --to ${{ github.event.inputs.to }}
   
