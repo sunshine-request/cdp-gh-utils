@@ -36,5 +36,6 @@ jobs:
         python cdp_gh_utils/bin/backfill_cdp_instance.py \
           sunshine-request cdp-asheville \
           ${{ github.event.inputs.from }} \
-          ${{ github.event.inputs.to }}
+          ${{ github.event.inputs.to }} \
+          --iter_days=1 --overlap_days=0 --debug
   
