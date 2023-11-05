@@ -1,0 +1,29 @@
+cdp\_gh\_utils package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdp_gh_utils.bin
+
+Submodules
+----------
+
+cdp\_gh\_utils.actions module
+-----------------------------
+
+.. automodule:: cdp_gh_utils.actions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cdp_gh_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
